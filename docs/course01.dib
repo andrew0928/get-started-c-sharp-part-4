@@ -1,0 +1,117 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+## 1. 在您的 C# 程式碼中選擇正確資料類型
+https://learn.microsoft.com/zh-tw/training/modules/csharp-choose-data-type/
+
+#!markdown
+
+### 1-3, 練習 - 探索整數類型
+
+https://learn.microsoft.com/zh-tw/training/modules/csharp-choose-data-type/3-exercise-integral-types
+
+#!csharp
+
+// demo 1: 使用每個帶正負號整數型別的 MinValue 和 MaxValue 屬性
+
+Console.WriteLine("Signed integral types:");
+
+Console.WriteLine($"sbyte  : {sbyte.MinValue} to {sbyte.MaxValue}");
+Console.WriteLine($"short  : {short.MinValue} to {short.MaxValue}");
+Console.WriteLine($"int    : {int.MinValue} to {int.MaxValue}");
+Console.WriteLine($"long   : {long.MinValue} to {long.MaxValue}");
+
+#!csharp
+
+// demo 2: 使用每個不帶正負號整數型別的 MinValue 和 MaxValue 屬性
+
+Console.WriteLine("");
+Console.WriteLine("Unsigned integral types:");
+
+Console.WriteLine($"byte   : {byte.MinValue} to {byte.MaxValue}");
+Console.WriteLine($"ushort : {ushort.MinValue} to {ushort.MaxValue}");
+Console.WriteLine($"uint   : {uint.MinValue} to {uint.MaxValue}");
+Console.WriteLine($"ulong  : {ulong.MinValue} to {ulong.MaxValue}");
+
+#!markdown
+
+### 1-4, 練習 - 探索浮點類型
+https://learn.microsoft.com/zh-tw/training/modules/csharp-choose-data-type/4-exercise-floating-point-types
+
+#!csharp
+
+// demo 1: 使用每個帶正負號浮動型別的 MinValue 和 MaxValue 屬性
+
+Console.WriteLine("");
+Console.WriteLine("Floating point types:");
+Console.WriteLine($"float  : {float.MinValue} to {float.MaxValue} (with ~6-9 digits of precision)");
+Console.WriteLine($"double : {double.MinValue} to {double.MaxValue} (with ~15-17 digits of precision)");
+Console.WriteLine($"decimal: {decimal.MinValue} to {decimal.MaxValue} (with 28-29 digits of precision)");
+
+#!markdown
+
+### 1-5, 練習 - 探索參考類型
+https://learn.microsoft.com/zh-tw/training/modules/csharp-choose-data-type/5-exercise-reference-types
+
+#!csharp
+
+// demo: C# 字串資料類型有何不同？
+
+string shortenedString = "Hello World!";
+Console.WriteLine(shortenedString);
+
+#!markdown
+
+### (獨家加料) Andrew's Comments:
+
+1. 參考 (reference) 跟 數值 (value) 的差別?
+1. 物件 (object) 跟 基礎型別 (basic type) 的差別
+1. 儲存在哪裡? 生命週期 (何時被 "建立"，何時被 "刪除"?) 的區別?
+1. Labs
+
+#!csharp
+
+// value variable 直接存 "內容"，指派的時候會 copy value
+
+int a = 100;
+int b = a;
+a = 101;
+Console.WriteLine($"variable (b) is: {b}");
+
+#!csharp
+
+// reference variable 只存 "參考", 指派的時候只會 copy "reference", 內容本身不會被複製
+
+class MyData
+{
+    public int IntegerValue = 0;
+}
+
+MyData a = new MyData() { IntegerValue = 100 };
+MyData b = a;
+a.IntegerValue = 101;
+Console.WriteLine($"variable (b) is: {b.IntegerValue}");
+
+#!csharp
+
+// 同上, class (reference type) 換成 struct (value type), 結果就不一樣了:
+
+struct MyData
+{
+    public int IntegerValue;
+}
+
+MyData a;
+a.IntegerValue = 100;
+
+MyData b = a;
+a.IntegerValue = 101;
+
+Console.WriteLine($"variable (b) is: {b.IntegerValue}");
+
+#!csharp
+
+// 同上，函數傳遞 (parameters or return value) 也是一樣，會因 value / reference type 而異

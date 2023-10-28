@@ -1,0 +1,8 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+## 5. 在 C# 中使用內建的字串資料類型方法來修改字串內容
+https://learn.microsoft.com/zh-tw/training/modules/csharp-modify-content/

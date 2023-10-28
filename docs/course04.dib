@@ -1,0 +1,256 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+## 4. 設定用於在 C# 中顯示之英數字元資料的格式
+https://learn.microsoft.com/zh-tw/training/modules/csharp-format-strings/
+
+#!markdown
+
+### 4-2, 練習 - 調查字串格式設定基礎
+https://learn.microsoft.com/zh-tw/training/modules/csharp-format-strings/2-string-formatting-basics
+
+#!csharp
+
+// demo 1, 什麼是複合格式設定？
+
+string first = "Hello";
+string second = "World";
+string result = string.Format("{0} {1}!", first, second);
+Console.WriteLine(result);
+
+#!csharp
+
+// demo 2, 什麼是字串插補？
+
+string first = "Hello";
+string second = "World";
+Console.WriteLine($"{first} {second}!");
+Console.WriteLine($"{second} {first}!");
+Console.WriteLine($"{first} {first} {first}!");
+
+#!markdown
+
+### (獨家爆料) Andrew's Note - string.Format() 與 字串插補 有甚麼差異?
+
+#!csharp
+
+// demo 3, 設定貨幣格式
+
+decimal price = 123.45m;
+int discount = 50;
+Console.WriteLine($"Price: {price:C} (Save {discount:C})");
+
+#!csharp
+
+// demo 4, 設定數字格式
+
+decimal measurement = 123456.78912m;
+Console.WriteLine($"Measurement: {measurement:N} units");
+
+#!csharp
+
+// demo 4 - 2
+
+decimal measurement = 123456.78912m;
+Console.WriteLine($"Measurement: {measurement:N4} units");
+
+#!csharp
+
+// demo 5, 設定百分比格式
+
+decimal tax = .36785m;
+Console.WriteLine($"Tax rate: {tax:P2}");
+Tax rate: 36.79 %
+
+#!csharp
+
+// demo 6, 結合格式設定方法
+
+decimal price = 67.55m;
+decimal salePrice = 59.99m;
+
+string yourDiscount = String.Format("You saved {0:C2} off the regular {1:C2} price. ", (price - salePrice), price);
+
+Console.WriteLine(yourDiscount);
+
+#!csharp
+
+// demo 6 - 2
+
+decimal price = 67.55m;
+decimal salePrice = 59.99m;
+
+string yourDiscount = String.Format("You saved {0:C2} off the regular {1:C2} price. ", (price - salePrice), price);
+
+yourDiscount += $"A discount of {((price - salePrice)/price):P2}!"; //inserted
+Console.WriteLine(yourDiscount);
+
+#!csharp
+
+// quiz
+
+decimal tax = .12051m;
+Console.WriteLine($"Tax rate: {tax:P1}");
+
+#!markdown
+
+### 4-3, 練習 - 探索字串插值
+https://learn.microsoft.com/zh-tw/training/modules/csharp-format-strings/3-exercise-string-interpolation
+
+#!csharp
+
+// demo 1, 使用字串插值顯示發票號碼
+
+int invoiceNumber = 1201;
+decimal productShares = 25.4568m;
+decimal subtotal = 2750.00m;
+decimal taxPercentage = .15825m;
+decimal total = 3185.19m;
+
+Console.WriteLine($"Invoice Number: {invoiceNumber}");
+
+#!csharp
+
+// demo 2 (續), 以千分之一股份 (0.001) 的精確度顯示產品股份
+
+Console.WriteLine($"   Shares: {productShares:N3} Product");
+
+#!csharp
+
+// demo 3 (續), 以貨幣格式顯示我們將向客戶收取的金額小計
+
+Console.WriteLine($"     Sub Total: {subtotal:C}");
+
+#!csharp
+
+// demo 4 (續), 以百分比格式顯示營業稅
+
+Console.WriteLine($"           Tax: {taxPercentage:P2}");
+
+#!csharp
+
+// demo 5, 以貨幣格式完成具有應收總金額的收據
+
+int invoiceNumber = 1201;
+decimal productShares = 25.4568m;
+decimal subtotal = 2750.00m;
+decimal taxPercentage = .15825m;
+decimal total = 3185.19m;
+
+Console.WriteLine($"Invoice Number: {invoiceNumber}");
+Console.WriteLine($"   Shares: {productShares:N3} Product");
+Console.WriteLine($"     Sub Total: {subtotal:C}");
+Console.WriteLine($"           Tax: {taxPercentage:P2}");
+Console.WriteLine($"     Total Billed: {total:C}");
+
+#!markdown
+
+### (獨家爆料) Andrew's Note - C# 背後的 Format 體系
+
+查閱官方文件: [String.Format](https://learn.microsoft.com/zh-tw/dotnet/api/system.string.format?view=net-7.0#Starting)
+
+* [哪裡可以找到可搭配格式專案使用的預先定義格式字串清單？](https://learn.microsoft.com/zh-tw/dotnet/api/system.string.format?view=net-7.0#where-can-i-find-a-list-of-the-predefined-format-strings-that-can-be-used-with-format-items)
+* [標準格式規範](https://learn.microsoft.com/zh-tw/dotnet/standard/base-types/standard-numeric-format-strings#standard-format-specifiers)
+
+#!csharp
+
+// 我們常用的 C# 寫法:
+decimal taxPercentage = .15825m;
+Console.WriteLine($"           Tax: {taxPercentage:P2}");
+
+// 拆解 (compile-time)
+string temp = taxPercentage.ToString("P2");
+Console.WriteLine("           Tax: " + temp);
+
+#!csharp
+
+// 我們常用的 C# 寫法:
+decimal taxPercentage = .15825m;
+Console.WriteLine("           Tax: {0:P2}", taxPercentage);
+
+// 拆解 (compile-time)
+string temp = taxPercentage.ToString("P2");
+Console.WriteLine("           Tax: {0}", temp);
+
+#!markdown
+
+### 4-4, 練習 - 探索填補及對齊
+https://learn.microsoft.com/zh-tw/training/modules/csharp-format-strings/4-exercise-string-methods-padding
+
+#!csharp
+
+// demo 6, string.Format() 方法可用來執行複合格式設定，如範例所示：
+
+string first = "Hello";
+string second = "World";
+string result = string.Format("{0} {1}!", first, second);
+Console.WriteLine(result);
+
+#!csharp
+
+// demo 7, 透過在前後加入空格以設定字串格式
+
+string input = "Pad this";
+Console.WriteLine(input.PadLeft(12));
+Console.WriteLine(input.PadRight(12));
+
+#!csharp
+
+// demo 8, 什麼是多載方法？
+Console.WriteLine(input.PadLeft(12, '-'));
+Console.WriteLine(input.PadRight(12, '-'));
+
+#!csharp
+
+// demo 9, 將付款識別碼新增至輸出
+
+string paymentId = "769C";
+
+var formattedLine = paymentId.PadRight(6);
+
+Console.WriteLine(formattedLine);
+
+#!csharp
+
+// demo 10, 將付款者姓名新增至輸出
+
+string paymentId = "769C";
+string payeeName = "Mr. Stephen Ortega";
+
+var formattedLine = paymentId.PadRight(6);
+formattedLine += payeeName.PadRight(24);
+
+Console.WriteLine(formattedLine);
+
+#!csharp
+
+// demo 11, 將付款金額新增至輸出
+
+string paymentId = "769C";
+string payeeName = "Mr. Stephen Ortega";
+string paymentAmount = "$5,000.00";
+
+var formattedLine = paymentId.PadRight(6);
+formattedLine += payeeName.PadRight(24);
+formattedLine += paymentAmount.PadLeft(10);
+
+Console.WriteLine(formattedLine);
+
+#!csharp
+
+// demo 12, 在輸出上方加上一行數字，以更輕鬆地確認結果
+
+
+string paymentId = "769C";
+string payeeName = "Mr. Stephen Ortega";
+string paymentAmount = "$5,000.00";
+
+var formattedLine = paymentId.PadRight(6);
+formattedLine += payeeName.PadRight(24);
+formattedLine += paymentAmount.PadLeft(10);
+
+Console.WriteLine("1234567890123456789012345678901234567890");
+Console.WriteLine(formattedLine);
