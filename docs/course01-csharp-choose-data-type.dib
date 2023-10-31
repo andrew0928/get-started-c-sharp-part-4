@@ -65,7 +65,7 @@ Console.WriteLine(shortenedString);
 
 #!markdown
 
-### (獨家加料) Andrew's Comments:
+### Andrew's Notes:
 
 1. 參考 (reference) 跟 數值 (value) 的差別?
 1. 物件 (object) 跟 基礎型別 (basic type) 的差別

@@ -14,15 +14,17 @@ https://learn.microsoft.com/zh-tw/training/modules/csharp-convert-cast/2-exercis
 
 #!csharp
 
-// demo 1, 撰寫程式碼，以嘗試新增 int 和 string，並儲存 int 中的結果
+// try it!
+// demo 1, 撰寫程式碼，以嘗試新增 int 和 string, 並儲存 int 中的結果
 
 int first = 2;
 string second = "4";
-int result = first + second;
+int result = first + second;    // Error: (5,14): error CS0029: Cannot implicitly convert type 'string' to 'int'
 Console.WriteLine(result);
 
 #!csharp
 
+// try it!
 // 請花一分鐘時間考慮編譯器為何無法執行第一個程式碼範例。
 // 您可以採 相反 做法，將數字串連到 string 並以字串變數儲存。 
 
@@ -30,6 +32,10 @@ int first = 2;
 string second = "4";
 string result = first + second;
 Console.WriteLine(result);
+
+// Andrew's Notes: 你覺得這行會輸出什麼結果?
+// Console.WriteLine(first + second);
+// Console.WriteLine((first + second).GetType());
 
 #!csharp
 

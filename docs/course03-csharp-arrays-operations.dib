@@ -48,7 +48,7 @@ foreach (var pallet in pallets)
 
 #!markdown
 
-### (獨家加料) Andrew's Note
+### Andrew's Notes:
 
 練習查閱 Microsoft .NET / C# 官方文件
 
