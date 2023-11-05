@@ -275,8 +275,150 @@ Console.WriteLine($"Divide value3 by value1, display the result as a float: {res
 
 #!markdown
 
-### (獨家加料) Andrew's Note - 弄懂 C# 語法在 Compile-Time 與 Run-Time 的差別
+### Andrew's Note - 弄懂 C# 語法在 Compile-Time 與 Run-Time 的差別
 
 https://www.c-sharpcorner.com/UploadFile/8911c4/code-execution-process/
 
 ![](https://www.c-sharpcorner.com/UploadFile/8911c4/code-execution-process/Images/Code-Execution-Process.jpg)
+
+#!markdown
+
+### Andrew's Note - 編譯器對字串的特別處理
+
+C# 的字串 (string) 有幾個與其他型別不同的特性，最重要的就是 "immutable":
+
+string 是 "object", 可以 new, 理論上是 reference type, 但是他的表現像是 value type.
+string 的比對 == 是看內容 (被 override 過), 不是看物件本身是不是同一個；
+為了避免過度影響效能, string 被設計為不可更改內容 (immutable), 你改變內容等同於換了一個新的 string
+因此編譯器會建立 string literals, 盡可能地重複使用 string
+
+#!csharp
+
+string a = "a";
+string b = "a";
+string c = new string('a', 1);
+object d = "a";
+object e = c;
+Console.WriteLine($"Is string A == B ? {a == b}");  // string.Equals()
+Console.WriteLine($"Is string A == C ? {a == c}");  // string.Equals()
+Console.WriteLine($"Is string A == D ? {a == d}");  // IL: ceq, same object (string literal)
+Console.WriteLine($"Is string A == E ? {a == e}");  // IL: ceq, different object
+
+// MSIL: ceq
+// Ref:  https://learn.microsoft.com/zh-tw/dotnet/api/system.reflection.emit.opcodes.ceq?view=net-7.0#--
+
+#!markdown
+
+上述程式碼反組譯，來看看真正執行的 IL 內容:
+
+
+```csharp
+
+// Methods
+.method /* 06000003 */ private hidebysig static 
+	void '<Main>$' (
+		string[] args
+	) cil managed 
+{
+	// Method begins at RVA 0x206c
+	// Header size: 12
+	// Code size: 230 (0xe6)
+	.maxstack 3
+	.entrypoint
+	.locals /* 11000001 */ init (
+		[0] string,
+		[1] string,
+		[2] string,
+		[3] object,
+		[4] object,
+		[5] valuetype [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler
+	)
+
+	IL_0000: ldstr "a" /* 70000001 */
+	IL_0005: stloc.0
+	IL_0006: ldstr "a" /* 70000001 */
+	IL_000b: stloc.1
+	IL_000c: ldc.i4.s 97
+	IL_000e: ldc.i4.1
+	IL_000f: newobj instance void [System.Runtime]System.String::.ctor(char, int32) /* 0A00000E */
+	IL_0014: stloc.2
+	IL_0015: ldstr "a" /* 70000001 */
+	IL_001a: stloc.3
+	IL_001b: ldloc.2
+	IL_001c: stloc.s 4
+	IL_001e: ldloca.s 5
+	IL_0020: ldc.i4.s 19
+	IL_0022: ldc.i4.1
+	IL_0023: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(int32, int32) /* 0A00000F */
+	IL_0028: ldloca.s 5
+	IL_002a: ldstr "Is string A == B ? " /* 70000005 */
+	IL_002f: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(string) /* 0A000010 */
+	IL_0034: nop
+	IL_0035: ldloca.s 5
+	IL_0037: ldloc.0
+	IL_0038: ldloc.1
+	IL_0039: call bool [System.Runtime]System.String::op_Equality(string, string) /* 0A000011 */
+	IL_003e: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted<bool>(!!0) /* 2B000001 */
+	IL_0043: nop
+	IL_0044: ldloca.s 5
+	IL_0046: call instance string [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear() /* 0A000013 */
+	IL_004b: call void [System.Console]System.Console::WriteLine(string) /* 0A000014 */
+	IL_0050: nop
+	IL_0051: ldloca.s 5
+	IL_0053: ldc.i4.s 19
+	IL_0055: ldc.i4.1
+	IL_0056: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(int32, int32) /* 0A00000F */
+	IL_005b: ldloca.s 5
+	IL_005d: ldstr "Is string A == C ? " /* 7000002D */
+	IL_0062: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(string) /* 0A000010 */
+	IL_0067: nop
+	IL_0068: ldloca.s 5
+	IL_006a: ldloc.0
+	IL_006b: ldloc.2
+	IL_006c: call bool [System.Runtime]System.String::op_Equality(string, string) /* 0A000011 */
+	IL_0071: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted<bool>(!!0) /* 2B000001 */
+	IL_0076: nop
+	IL_0077: ldloca.s 5
+	IL_0079: call instance string [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear() /* 0A000013 */
+	IL_007e: call void [System.Console]System.Console::WriteLine(string) /* 0A000014 */
+	IL_0083: nop
+	IL_0084: ldloca.s 5
+	IL_0086: ldc.i4.s 19
+	IL_0088: ldc.i4.1
+	IL_0089: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(int32, int32) /* 0A00000F */
+	IL_008e: ldloca.s 5
+	IL_0090: ldstr "Is string A == D ? " /* 70000055 */
+	IL_0095: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(string) /* 0A000010 */
+	IL_009a: nop
+	IL_009b: ldloca.s 5
+	IL_009d: ldloc.0
+	IL_009e: ldloc.3
+	IL_009f: ceq
+	IL_00a1: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted<bool>(!!0) /* 2B000001 */
+	IL_00a6: nop
+	IL_00a7: ldloca.s 5
+	IL_00a9: call instance string [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear() /* 0A000013 */
+	IL_00ae: call void [System.Console]System.Console::WriteLine(string) /* 0A000014 */
+	IL_00b3: nop
+	IL_00b4: ldloca.s 5
+	IL_00b6: ldc.i4.s 19
+	IL_00b8: ldc.i4.1
+	IL_00b9: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(int32, int32) /* 0A00000F */
+	IL_00be: ldloca.s 5
+	IL_00c0: ldstr "Is string A == E ? " /* 7000007D */
+	IL_00c5: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(string) /* 0A000010 */
+	IL_00ca: nop
+	IL_00cb: ldloca.s 5
+	IL_00cd: ldloc.0
+	IL_00ce: ldloc.s 4
+	IL_00d0: ceq
+	IL_00d2: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted<bool>(!!0) /* 2B000001 */
+	IL_00d7: nop
+	IL_00d8: ldloca.s 5
+	IL_00da: call instance string [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear() /* 0A000013 */
+	IL_00df: call void [System.Console]System.Console::WriteLine(string) /* 0A000014 */
+	IL_00e4: nop
+	IL_00e5: ret
+} // end of method Program::'<Main>$'
+
+```
