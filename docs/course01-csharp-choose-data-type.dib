@@ -53,6 +53,35 @@ Console.WriteLine($"decimal: {decimal.MinValue} to {decimal.MaxValue} (with 28-2
 
 #!markdown
 
+## Andrew's Note
+
+單精度浮點數:
+https://zh.wikipedia.org/zh-tw/%E5%96%AE%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8
+
+
+定義: 第1位表示正負，中間8位表示指數，後23位儲存有效數位（有效數位是24位）。
+
+第一位的正負號0代表正，1代表負。
+
+中間八位共可表示28=256個數，指數可以是二補碼；或0到255，0到126代表-127到-1，127代表零，128-255代表1-128。
+
+有效數位最左手邊的1並不會儲存，因為它一定存在（二進制的第一個有效數字必定是1）。換言之，有效數位是24位，實際儲存23位。
+
+![Alt text](image-1.png)
+
+
+雙精度浮點數:
+https://zh.wikipedia.org/zh-tw/%E9%9B%99%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8
+
+![Alt text](image-2.png)
+
+Characteristics of the floating-point types:
+https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types#characteristics-of-the-floating-point-types
+
+![Alt text](image-3.png)
+
+#!markdown
+
 ### 1-5, 練習 - 探索參考類型
 https://learn.microsoft.com/zh-tw/training/modules/csharp-choose-data-type/5-exercise-reference-types
 
@@ -67,10 +96,26 @@ Console.WriteLine(shortenedString);
 
 ### Andrew's Notes:
 
-1. 參考 (reference) 跟 數值 (value) 的差別?
+1. 參考 (reference) 跟 數值 (value) 的差別?  
 1. 物件 (object) 跟 基礎型別 (basic type) 的差別
 1. 儲存在哪裡? 生命週期 (何時被 "建立"，何時被 "刪除"?) 的區別?
 1. Labs
+
+> 參考: 變數儲存 "物件" 的 "指標", 數值: 變數儲存 "資料"。  
+> 參考: 若指標沒有指向任何物件，則為 null
+> 變數本身存在 stack, 物件本身存在 heap
+
+
+### Andrew's Notes:
+
+C# 字串資料類型有何不同?
+
+字串是 reference type, 但是他太常用了, C# compiler 賦予他很多特性, 讓他用起來更像 value type 一點, 效率也更好一點:
+
+1. 不需要 new, 可以為 null
+1. 不可改變
+1. string literal
+1. == 與 .Equals() 的差別
 
 #!csharp
 

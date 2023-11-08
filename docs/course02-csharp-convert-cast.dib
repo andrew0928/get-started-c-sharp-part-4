@@ -67,6 +67,43 @@ float myFloat = (float)myDecimal;
 Console.WriteLine($"Decimal: {myDecimal}");
 Console.WriteLine($"Float  : {myFloat}");
 
+#!markdown
+
+### 執行資料轉換, Andrew's Notes...
+
+以下是 .NET BCL (Basic Class Library) 的介面定義慣例
+
+```csharp
+
+// 這是直接定義在 System.Object 上的 method, 可以自己覆寫
+string <Type>.ToString()
+
+```
+
+System.Object 的官方規格文件: https://learn.microsoft.com/zh-tw/dotnet/api/system.object.tostring?view=net-7.0
+
+我們這次課程有碰到的:
+1. == vs .Equals(...)
+1. .ToString(...)
+
+
+
+```csharp
+
+// 這是基本型別對應的靜態 method
+bool <Type>.TryParse(string content, out Type value)
+
+```
+
+
+參考: https://learn.microsoft.com/zh-tw/dotnet/api/system.convert?view=net-7.0
+
+```csharp
+// Convert 支援基本型別之間的轉換
+
+Convert.ToInt32(...)
+```
+
 #!csharp
 
 // demo 6, 執行資料轉換; 使用 ToString() 將數位轉換成 string
@@ -299,6 +336,13 @@ string b = "a";
 string c = new string('a', 1);
 object d = "a";
 object e = c;
+
+Console.WriteLine($"string a => {a}");
+Console.WriteLine($"string b => {b}");
+Console.WriteLine($"string c => {c}");
+Console.WriteLine($"string d => {d}");
+Console.WriteLine($"string e => {e}");
+
 Console.WriteLine($"Is string A == B ? {a == b}");  // string.Equals()
 Console.WriteLine($"Is string A == C ? {a == c}");  // string.Equals()
 Console.WriteLine($"Is string A == D ? {a == d}");  // IL: ceq, same object (string literal)
@@ -310,6 +354,9 @@ Console.WriteLine($"Is string A == E ? {a == e}");  // IL: ceq, different object
 #!markdown
 
 上述程式碼反組譯，來看看真正執行的 IL 內容:
+
+1. 看懂 load xxx, store xxx 指令
+1. 看懂 call method + parameters 的結構 ( push param1, push param2, push param3, call, pop result )
 
 
 ```csharp

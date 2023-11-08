@@ -12,10 +12,10 @@
 
 深入探索資料與類型，並學習如何操作字串與數值資料，以及對陣列執行作業。 在此學習路徑中，您將會：
 
-- 針對您必須處理的資料，選擇正確的資料類型
-- 轉換資料並將資料從一種類型轉換成另一種類型
-- 修改字串資料，設定其格式以供顯示或變更字串內容
-- 操作陣列、新增、移除及排序資料
+- (型別) 針對您必須處理的資料，選擇正確的資料類型
+- (轉型) 轉換資料並將資料從一種類型轉換成另一種類型
+- (顯示) 修改字串資料，設定其格式以供顯示或變更字串內容
+- (陣列) 操作陣列、新增、移除及排序資料
 
 * Microsoft Learn 連結: [Learn C#](https://learn.microsoft.com/zh-tw/collections/yz26f8y64n7k07?WT.mc_id=dotnet-35129-website&sharingId=AZ-MVP-5002155)
 
@@ -46,9 +46,11 @@
 
 1. VS Code
 1. .NET 7.0 SDK
-1. 安裝 VS Code Extension (現在已經改名為 Polyglot Notebooks):  https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode
+1. 安裝 VS Code Extension (現在已經改名為 Polyglot Notebooks):  
+https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode
 
-保哥有準備一份繁體中文版的 repo, 包含大量的介紹與示範教學，有興趣了解的可以多加利用: https://github.com/doggy8088/csharp-notebooks#net-interactive-notebooks-for-c
+保哥有準備一份繁體中文版的 repo, 包含大量的介紹與示範教學，有興趣了解的可以多加利用:  
+https://github.com/doggy8088/csharp-notebooks#net-interactive-notebooks-for-c
 
 #!csharp
 
@@ -60,3 +62,7 @@
 
 var name = "Andrew Wu";
 Console.WriteLine($"Hello World, {name}!");
+
+#!csharp
+
+Console.WriteLine($"Hello World Again, {name}!");
