@@ -53,9 +53,26 @@ Console.WriteLine($"decimal: {decimal.MinValue} to {decimal.MaxValue} (with 28-2
 
 #!markdown
 
-## Andrew's Note
+### Andrew's Note
 
-單精度浮點數:
+背後的想法: 如何有效率的用最少位元，達到最大功效 (數值範圍，精確度)。把位元用在能提高精確度的地方 (不要浪費) 是基本的原則。
+
+
+
+#### 科學記號
+
+先來看看傳統科學，怎麼用 "科學記號" (scientific notation) 來解決這問題:
+https://zh.wikipedia.org/zh-tw/%E7%A7%91%E5%AD%A6%E8%AE%B0%E6%95%B0%E6%B3%95
+
+![Alt text](image-6.png)
+
+
+----
+
+同樣的結構，把他變成二進位，就是浮點數的基本結構了。省掉小數點 (一定在第一位後面)，省掉第一位數 (一定是 1)..
+
+
+#### 單精度浮點數:
 https://zh.wikipedia.org/zh-tw/%E5%96%AE%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8
 
 
@@ -69,8 +86,9 @@ https://zh.wikipedia.org/zh-tw/%E5%96%AE%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%
 
 ![Alt text](image-1.png)
 
+----
 
-雙精度浮點數:
+#### 雙精度浮點數:
 https://zh.wikipedia.org/zh-tw/%E9%9B%99%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8
 
 ![Alt text](image-2.png)
