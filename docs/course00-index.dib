@@ -9,6 +9,10 @@
 ![banner](image.png)
 
 主題: 在 C# 主控台應用程式中使用變數資料 (開始使用 C#，第 4 部分)
+講者: Andrew Wu  
+https://columns.chicken-house.net/about/  
+https://columns.chicken-house.net/2008/09/27/%E8%A9%B2%E5%A6%82%E4%BD%95%E5%AD%B8%E5%A5%BD-%E5%AF%AB%E7%A8%8B%E5%BC%8F/
+
 
 深入探索資料與類型，並學習如何操作字串與數值資料，以及對陣列執行作業。 在此學習路徑中，您將會：
 
@@ -58,6 +62,21 @@ https://devblogs.microsoft.com/dotnet/announcing-foundational-csharp-certificati
 
 #!markdown
 
+### Andrew's Note: 建立 .NET 專案, 用 VS code 開發
+
+這次的介紹，我雖然都用 .NET Interactive Notebook 示範，但是正式開發你還是跑不掉這個過程。
+我會簡單的示範一次基本的流程。
+
+1. 用命令列產生 .NET 專案: 先建立好工作目錄，切換到工作目錄後執行 ```dotnet new console```
+1. 開啟 vscode 編輯這個工作目錄。我個人喜歡直接用命令列叫出 vscode: ```code .```
+1. 按照課程的說明，將程式碼放到專案內
+1. 命令列: ```dotnet run``` 可執行，```dotnet build``` 可以建構專案
+1. 你也可以用 vscode, F5 進入除錯模式 (可暫停，或是觀察變數內容)，也可 CTRL-F5 跳過 debugger 直接執行 (等同 dotnet run)
+
+(直接看示範 demo)
+
+#!markdown
+
 ### Andrew's Notes: 這次的 Labs 示範方式
 
 為了方便展示 C# 語言的特性與使用方式，我只有在特定的 demo 會用完整的 .net project 來進行示範，其餘大部分的 demo 我都會用 .NET Interactive Notebooks (for C#) 環境來示範這些程式碼的運作方式 & 輸出結果。
@@ -86,18 +105,3 @@ Console.WriteLine($"Hello World, {name}!");
 #!csharp
 
 Console.WriteLine($"Hello World Again, {name}!");
-
-#!markdown
-
-### Andrew's Note: 建立 .NET 專案, 用 VS code 開發
-
-這次的介紹，我雖然都用 .NET Interactive Notebook 示範，但是正式開發你還是跑不掉這個過程。
-我會簡單的示範一次基本的流程。
-
-1. 用命令列產生 .NET 專案: 先建立好工作目錄，切換到工作目錄後執行 ```dotnet new console```
-1. 開啟 vscode 編輯這個工作目錄。我個人喜歡直接用命令列叫出 vscode: ```code .```
-1. 按照課程的說明，將程式碼放到專案內
-1. 命令列: ```dotnet run``` 可執行，```dotnet build``` 可以建構專案
-1. 你也可以用 vscode, F5 進入除錯模式 (可暫停，或是觀察變數內容)，也可 CTRL-F5 跳過 debugger 直接執行 (等同 dotnet run)
-
-(直接看示範 demo)
