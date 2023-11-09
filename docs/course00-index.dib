@@ -30,7 +30,7 @@
 
 1. C# 使用變數的必要基礎知識，以及語法 & 編譯器的支援 (course01, course02)
 1. .NET BCL (Basic Class Library) 內建的套件支援 (course03, course04)
-1. (追加) 背後重要的觀念
+1. (追加) 背後重要的觀念: reference / value type, runtime / compile time, language / library
 
 而這些部份我會略過，或是點到為止:
 1. 上述基礎的組合應用 (需要自己練習)
